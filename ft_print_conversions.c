@@ -21,13 +21,12 @@ void	print_c(va_list list, t_info *info, const char *format)
 	else
 		c = *format;
 	if (!info->negative_flag && !info->zero_flag)
-		ft_putsame_std(' ', info->min_width, 1, info);
+		ft_putsame_std(' ', info->min_width - 1, info);
 	if (!info->negative_flag && info->zero_flag)
-		ft_putsame_std('0', info->min_width, 1, info);
-	if (info->print_count != -1 && info->print_count != -1)
-		ft_putchr_std(c, info);
+		ft_putsame_std('0', info->min_width - 1, info);
+	ft_putchr_std(c, info);
 	if (info->negative_flag)
-		ft_putsame_std(' ', info->min_width, 1, info);
+		ft_putsame_std(' ', info->min_width - 1, info);
 }
 
 void	print_s(va_list list, t_info *info)
@@ -42,13 +41,12 @@ void	print_s(va_list list, t_info *info)
 	if (info->precision != -1)
 		visible_len = min(visible_len, info->precision);
 	if (!info->negative_flag && !info->zero_flag)
-		ft_putsame_std(' ', info->min_width, visible_len, info);
+		ft_putsame_std(' ', info->min_width - visible_len, info);
 	if (!info->negative_flag && info->zero_flag)
-		ft_putsame_std('0', info->min_width, visible_len, info);
-	if (info->print_count != -1 && info->print_count != -1)
-		ft_putstr_std(s, visible_len, info);
+		ft_putsame_std('0', info->min_width - visible_len, info);
+	ft_putstr_std(s, visible_len, info);
 	if (info->negative_flag)
-		ft_putsame_std(' ', info->min_width, visible_len, info);
+		ft_putsame_std(' ', info->min_width - visible_len, info);
 }
 
 void	print_ux(va_list list, t_info *info)
@@ -64,15 +62,15 @@ void	print_ux(va_list list, t_info *info)
 		visible_len = max(visible_len, info->precision);
 	if ((!info->negative_flag && !info->zero_flag)
 	|| (!info->negative_flag && info->precision >= 0))
-		ft_putsame_std(' ', info->min_width, visible_len, info);
+		ft_putsame_std(' ', info->min_width - visible_len, info);
 	if (!info->negative_flag && info->zero_flag && info->precision == -1)
-		ft_putsame_std('0', info->min_width, visible_len, info);
+		ft_putsame_std('0', info->min_width - visible_len, info);
 	if (info->precision > 0)
-		ft_putsame_std('0', visible_len, check_hex_len(x, info), info);
-	if (!(info->precision == 0 && x == 0) && info->print_count != -1)
+		ft_putsame_std('0', visible_len - check_hex_len(x, info), info);
+	if (!(info->precision == 0 && x == 0))
 		put_hex_std(x, info);
 	if (info->negative_flag)
-		ft_putsame_std(' ', info->min_width, visible_len, info);
+		ft_putsame_std(' ', info->min_width - visible_len, info);
 }
 
 void	print_p(va_list list, t_info *info)
@@ -88,16 +86,16 @@ void	print_p(va_list list, t_info *info)
 		visible_len = max(visible_len, info->precision);
 	if ((!info->negative_flag && !info->zero_flag)
 	|| (!info->negative_flag && info->precision >= 0))
-		ft_putsame_std(' ', info->min_width, visible_len + 2, info);
+		ft_putsame_std(' ', info->min_width - visible_len - 2, info);
 	ft_putstr_std("0x", 2, info);
 	if (!info->negative_flag && info->zero_flag && info->precision == -1)
-		ft_putsame_std('0', info->min_width, visible_len + 2, info);
+		ft_putsame_std('0', info->min_width - visible_len - 2, info);
 	if (info->precision > 0)
-		ft_putsame_std('0', visible_len, check_hex_len(ptr, info), info);
-	if (!(info->precision == 0 && ptr == 0) && info->print_count != -1)
+		ft_putsame_std('0', visible_len - check_hex_len(ptr, info), info);
+	if (!(info->precision == 0 && ptr == 0))
 		put_ptr_std(ptr, info);
 	if (info->negative_flag)
-		ft_putsame_std(' ', info->min_width, visible_len + 2, info);
+		ft_putsame_std(' ', info->min_width - visible_len - 2, info);
 }
 
 void	print_di(va_list list, t_info *info)
@@ -113,18 +111,18 @@ void	print_di(va_list list, t_info *info)
 		visible_len = max(visible_len, info->precision);
 	if ((!info->negative_flag && !info->zero_flag)
 	|| (!info->negative_flag && info->precision >= 0))
-		ft_putsame_std(' ', info->min_width, visible_len
-	+ is_negative(d), info);
-	if (d < 0 && info->print_count != -1)
+		ft_putsame_std(' ', info->min_width - visible_len
+		- is_negative(d), info);
+	if (d < 0)
 		ft_putchr_std('-', info);
 	if (!info->negative_flag && info->zero_flag && info->precision == -1)
-		ft_putsame_std('0', info->min_width, visible_len
-		+ is_negative(d), info);
+		ft_putsame_std('0', info->min_width - visible_len
+		- is_negative(d), info);
 	if (info->precision > 0)
-		ft_putsame_std('0', visible_len, count_digit(d), info);
-	if (!(info->precision == 0 && d == 0) && info->print_count != -1)
+		ft_putsame_std('0', visible_len - count_digit(d), info);
+	if (!(info->precision == 0 && d == 0))
 		ft_putnbr_std(d, info);
 	if (info->negative_flag)
-		ft_putsame_std(' ', info->min_width, visible_len
-		+ is_negative(d), info);
+		ft_putsame_std(' ', info->min_width - visible_len
+		- is_negative(d), info);
 }

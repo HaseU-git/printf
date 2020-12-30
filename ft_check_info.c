@@ -38,8 +38,6 @@ const char	*check_min_width(const char *format, va_list list, t_info *info)
 		{
 			info->negative_flag = 1;
 			info->min_width *= -1;
-			if (info->min_width == INT_MIN)
-				info->min_width = INT_MAX;
 		}
 		return (++format);
 	}
