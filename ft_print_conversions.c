@@ -80,19 +80,19 @@ void	print_p(va_list list, t_info *info)
 
 	ptr = (uintptr_t)va_arg(list, void*);
 	visible_len = check_ptr_len(ptr);
-	if (info->precision == 0)
+	if (info->precision == 0 && ptr == 0)
 		visible_len = 0;
 	if (info->precision != -1)
 		visible_len = max(visible_len, info->precision);
 	if ((!info->negative_flag && !info->zero_flag)
-	|| (!info->negative_flag && info->precision > 0))
+	|| (!info->negative_flag && info->precision >= 0))
 		ft_putsame_std(' ', info->min_width - visible_len - 2, info);
 	ft_putstr_std("0x", 2, info);
 	if (!info->negative_flag && info->zero_flag && info->precision == -1)
 		ft_putsame_std('0', info->min_width - visible_len - 2, info);
 	if (info->precision > 0)
 		ft_putsame_std('0', visible_len - check_hex_len(ptr, info), info);
-	if (info->precision != 0)
+	if (!(info->precision == 0 && ptr == 0))
 		put_ptr_std(ptr, info);
 	if (info->negative_flag)
 		ft_putsame_std(' ', info->min_width - visible_len - 2, info);
