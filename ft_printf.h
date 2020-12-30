@@ -39,7 +39,7 @@ void			put_hex_std(unsigned int num, t_info *info);
 void			put_ptr_std(uintptr_t num, t_info *info);
 int				check_ptr_len(uintptr_t num);
 int				check_hex_len(unsigned int num, t_info *info);
-void			ft_putsame_std(char c, int num, t_info *info);
+void			ft_putsame_std(char c, int num1, int num2, t_info *info);
 int				ft_isdigit(int c);
 int				ft_atoi(const char *str);
 const char		*normal_print(t_info *info, const char *format);
