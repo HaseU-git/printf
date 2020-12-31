@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_info.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhasegaw <yhasegaw@student.42.jp>          +#+  +:+       +#+        */
+/*   By: yhasegaw <yhasegaw@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 00:07:16 by yhasegaw          #+#    #+#             */
-/*   Updated: 2020/12/30 00:13:07 by yhasegaw         ###   ########.fr       */
+/*   Updated: 2020/12/31 13:59:24 by yhasegaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ const char	*check_min_width(const char *format, va_list list, t_info *info)
 
 const char	*check_precision(const char *format, va_list list, t_info *info)
 {
+	int test;
+
 	if (*format != '.')
 	{
 		info->precision = -1;
@@ -60,8 +62,7 @@ const char	*check_precision(const char *format, va_list list, t_info *info)
 	if (*format == '*')
 	{
 		info->precision = va_arg(list, int);
-		if (info->precision < 0)
-			info->precision = -1;
+		test = info->precision;
 		return (++format);
 	}
 	info->precision = ft_atoi(format);
