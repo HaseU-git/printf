@@ -40,9 +40,164 @@ printf関数の詳しい仕様
 以下のコマンドを実行してください。  
 
 ```shell
+git clone https://github.com/HaseU-git/printf
+cd project
 make
 ```
 
+次に、`ft_printf`関数を仕様するためのmainファイルを作成していきます。  
+ここでは、本家のprintfと比較するような形のmainを作成していきます。  
+
+以下のコマンドを実行してください。  
+
+```shell
+echo "#include <stdio.h>
+#include <stdlib.h>
+#include \"ft_printf.h\"
+#include <limits.h>
+
+#define BAR \"================\n\n\"
+#define ORIGINAL \"\n\n=====printf=====\"
+#define MINE \"====ft_printf====\"
+
+int main()
+{
+	int p = 9;
+	unsigned int u = 100;
+	char *test = \"test\";
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"%c\n%s\n%p\n%d\n%i\n%u\n%x\n%X\n%%\n\", 'a', \"abcd\", &p, p, p, u, p, p);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"%c\n%s\n%p\n%d\n%i\n%u\n%x\n%X\n%%\n\", 'a', \"abcd\", &p, p, p, u, p, p);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"test%s\n%p\n%d\n%d\n%d\n\", \"\", NULL, 0, INT_MAX, INT_MIN);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"test%s\n%p\n%d\n%d\n%d\n\", \"\", NULL, 0, INT_MAX, INT_MIN);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%-1s'\n'%-4s'\n'%-8s'\n\", test, test, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%-1s'\n'%-4s'\n'%-8s'\n\", test, test, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%0-1s'\n'%04s'\n'%08s'\n\", test, test, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%0-1s'\n'%04s'\n'%08s'\n\", test, test, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%1.10s'\n'%.3s'\n'%8.s'\n\", test, test, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%1.10s'\n'%.3s'\n'%8.s'\n\", test, test, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*s'\n\", 8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*s'\n\", 8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*s'\n\", -8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*s'\n\", -8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*s'\n\", 0, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*s'\n\", 0, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%.*s'\n\", 0, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%.*s'\n\", 0, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%.*s'\n\", -8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%.*s'\n\", -8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%.*s'\n\", 8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%.*s'\n\", 8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%.*s'\n\", 3, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%.*s'\n\", 3, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%.*s'\n\", -3, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%.*s'\n\", -3, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*.*s'\n\", 8, 0, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*.*s'\n\",8, 0, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*.*s'\n\", 8,-8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*.*s'\n\",8, -8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*.*s'\n\",-6, 8, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*.*s'\n\",-6, 8, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*.*s'\n\",-10 ,3, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*.*s'\n\",-10, 3, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%*.*s'\n\",10, -3, test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%*.*s'\n\",10, -3, test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"%--------s\n\", test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"%--------s\n\", test);
+	printf(\"%s\n\", BAR);
+
+	printf(\"%s\n\", ORIGINAL);
+	printf(\"'%%%%%0--*.*s'\n\", -8, 3,test);
+	printf(\"%s\n\", MINE);
+	ft_printf(\"'%%%%%0--*.*s'\n\", -8, 3, test);
+	printf(\"%s\n\", BAR);
+
+	return (0);
+}" > main.c
+```
+
+ここでは精度、最小フィールド幅などを組み合わせてさまざまなパターンを試しています。 
+
+mainファイルを書き終えたらコンパイルし、実行ファイルを作成し実行します。  
+
+```
+gcc main.c libftprintf.a
+./a.out
+```
 
 ## 開発環境
 - MacBook Pro (15-inch, 2018)
