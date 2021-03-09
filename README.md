@@ -41,7 +41,7 @@ printf関数の詳しい仕様
 
 ```shell
 git clone https://github.com/HaseU-git/printf
-cd project
+cd printf/project
 make
 ```
 
