@@ -56,8 +56,8 @@ echo "#include <stdio.h>
 #include \"ft_printf.h\"
 #include <limits.h>
 
-#define BAR \"================\\n\\n\"
-#define ORIGINAL \"\\n\\n=====printf=====\"
+#define BAR \"================\\\n\\\n\"
+#define ORIGINAL \"\\\n\\\n=====printf=====\"
 #define MINE \"====ft_printf====\"
 
 int main()
